@@ -82,9 +82,8 @@ function AppStack() {
 function DrawerMenu() {
   return (
     <Drawer.Navigator
-      initialRouteName="Home"
+      initialRouteName="DrawerHome"
       drawerType="slide"
-      initialRouteName="Home"
       overlayColor="transparent"
       drawerStyle={{
         backgroundColor: "#fff",
@@ -94,7 +93,7 @@ function DrawerMenu() {
       }}
     >
       <Drawer.Screen
-        name="Home"
+        name="DrawerHome"
         component={AppStack}
         headerMode="none"
         options={{ headerShown: false }}
