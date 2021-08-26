@@ -9,6 +9,7 @@ import {
 } from "../helpers/commonHelpers/helpers";
 import CheckBox from "react-native-check-box";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import ReligionCard from "./cards/religionCard";
 
 const data = [
   {
@@ -33,34 +34,41 @@ export default class GenderOptions extends Component {
     };
   }
 
+  selectOption = (i) => {
+    this.setState({
+      selectedIndex: i,
+    });
+  };
+
   render() {
     return (
-      <View style={styles.container}>
-        {data.map((obj, i) => {
-          return (
-            <CheckBox
-              style={{ padding: 10, width: 120 }}
-              onClick={() => {
-                this.setState({
-                  selectedIndex: i,
-                });
-              }}
-              isChecked={obj.id == this.state.selectedIndex}
-              rightText={obj.lable}
-              rightTextStyle={styles.text}
-              checkedImage={
-                <TouchableOpacity
-                  style={[styles.wrap, commonStyle.elevatedShadow]}
-                ></TouchableOpacity>
-              }
-              unCheckedImage={
-                <TouchableOpacity
-                  style={[styles.unselectedWrap, commonStyle.elevatedShadow]}
-                ></TouchableOpacity>
-              }
-            />
-          );
-        })}
+      <View>
+        <View style={styles.container}>
+          {data.map((obj, i) => {
+            return (
+              <CheckBox
+                key={i}
+                style={{ padding: 10, width: 120 }}
+                onClick={() => {
+                  this.selectOption(i);
+                }}
+                isChecked={obj.id == this.state.selectedIndex}
+                rightText={obj.lable}
+                rightTextStyle={styles.text}
+                checkedImage={
+                  <TouchableOpacity
+                    style={[styles.wrap, commonStyle.elevatedShadow]}
+                  ></TouchableOpacity>
+                }
+                unCheckedImage={
+                  <TouchableOpacity
+                    style={[styles.unselectedWrap, commonStyle.elevatedShadow]}
+                  ></TouchableOpacity>
+                }
+              />
+            );
+          })}
+        </View>
       </View>
     );
   }

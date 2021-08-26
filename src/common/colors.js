@@ -3,6 +3,10 @@ const COLORS = {
   BLACK: "#000000",
   APP_BLUE: "#2982BC",
   SIDE_MENU_TEXT: "#7E7E7E",
+  REDISH:"#E46A6A",
+  PINKISH:"#E49F9F",
+  LIGHT_BLUE:"#2BAFF6",
+  
 };
 
 const lighten = (value) => {
