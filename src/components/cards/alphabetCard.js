@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import COLORS from "../../common/colors";
+import { commonStyle } from "../../common/styles";
 import {
   GetOptimalHieght,
   GetOptimalWidth,
@@ -29,6 +30,7 @@ const styles = StyleSheet.create({
     marginVertical: GetOptimalHieght(20),
     borderRadius: GetOptimalHieght(7),
     marginHorizontal: GetOptimalWidth(20),
+    ...commonStyle.elevatedShadow,
   },
   title: {
     color: COLORS.WHITE,

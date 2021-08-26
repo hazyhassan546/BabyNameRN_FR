@@ -18,8 +18,12 @@ const girl = require("../assets/girl.png");
 const book = require("../assets/book.png");
 const letters = require("../assets/letters.png");
 const both = require("../assets/both.png");
+const down = require("../assets/down.png");
+const home = require("../assets/Home.png");
 
 export default Images = {
+  home,
+  down,
   trend,
   boy,
   girl,

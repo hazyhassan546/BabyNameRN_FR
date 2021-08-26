@@ -11,7 +11,7 @@ import {
 export default class OptionsCard extends Component {
   render() {
     return (
-      <TouchableOpacity style={styles.container}>
+      <TouchableOpacity onPress={this.props.onPress} style={styles.container}>
         <Image source={this.props.data.image} style={styles.imageStyle} />
         <Text style={styles.title}> {this.props.data.title} </Text>
       </TouchableOpacity>

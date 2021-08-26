@@ -20,7 +20,7 @@ export default class BackHeader extends Component {
         >
           <Icon name="arrow-back" type="MaterialIcons" color={COLORS.WHITE} />
         </TouchableOpacity>
-        <Text style={styles.title}>Home Screen</Text>
+        <Text style={styles.title}>{this.props.title}</Text>
         <TouchableOpacity
           onPress={this.props.gotoHome}
           style={[styles.buttonStyle, { position: "absolute", right: 25 }]}
