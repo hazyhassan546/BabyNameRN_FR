@@ -57,7 +57,17 @@ export default class ByReligion extends Component {
           data={data}
           keyExtractor={(item) => item.title}
           renderItem={({ item }) => {
-            return <ReligionCard title={item.title} image={item.image} />;
+            return (
+              <ReligionCard
+                title={item.title}
+                image={item.image}
+                onPress={() => {
+                  this.props.navigation.navigate("NameListing", {
+                    data: "By Religion",
+                  });
+                }}
+              />
+            );
           }}
           showsVerticalScrollIndicator={false}
           ListHeaderComponent={<GenderOptions />}

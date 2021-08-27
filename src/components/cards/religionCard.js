@@ -11,7 +11,12 @@ import {
 export default class ReligionCard extends Component {
   render() {
     return (
-      <TouchableOpacity style={styles.container}>
+      <TouchableOpacity
+        onPress={() => {
+          this.props.onPress();
+        }}
+        style={styles.container}
+      >
         <Image source={this.props.image} style={styles.image} />
         <Text style={styles.title}>{this.props.title}</Text>
       </TouchableOpacity>

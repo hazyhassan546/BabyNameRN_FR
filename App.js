@@ -1,13 +1,15 @@
 import * as React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import COLORS from "./src/common/colors";
 import Navigator from "./src/helpers/navigationHelper/navigationHelper";
 
 function App() {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
+      <StatusBar animated={true} hidden={true} />
       <Navigator />
-    </SafeAreaView>
+    </View>
   );
 }
 

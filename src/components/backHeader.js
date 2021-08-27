@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+  Platform,
+} from "react-native";
 import COLORS from "../common/colors";
 import images from "../common/images";
 import { Icon } from "react-native-elements";
@@ -13,20 +20,31 @@ import { commonStyle } from "../common/styles";
 export default class BackHeader extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity
-          onPress={this.props.onBackPress}
-          style={[styles.touchableHide, { position: "absolute", left: 20 }]}
-        >
-          <Icon name="arrow-back" type="MaterialIcons" color={COLORS.WHITE} />
-        </TouchableOpacity>
-        <Text style={styles.title}>{this.props.title}</Text>
-        <TouchableOpacity
-          onPress={this.props.gotoHome}
-          style={[styles.buttonStyle, { position: "absolute", right: 25 }]}
-        >
-          <Image source={images.babyImage} style={styles.imageStyle} />
-        </TouchableOpacity>
+      <View>
+        <View
+          style={{
+            backgroundColor: COLORS.APP_BLUE,
+            height:
+              Platform.OS === "ios"
+                ? GetOptimalHieght(30)
+                : GetOptimalHieght(20),
+          }}
+        ></View>
+        <View style={styles.container}>
+          <TouchableOpacity
+            onPress={this.props.onBackPress}
+            style={[styles.touchableHide, { position: "absolute", left: 20 }]}
+          >
+            <Icon name="arrow-back" type="MaterialIcons" color={COLORS.WHITE} />
+          </TouchableOpacity>
+          <Text style={styles.title}>{this.props.title}</Text>
+          <TouchableOpacity
+            onPress={this.props.gotoHome}
+            style={[styles.buttonStyle, { position: "absolute", right: 25 }]}
+          >
+            <Image source={images.babyImage} style={styles.imageStyle} />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

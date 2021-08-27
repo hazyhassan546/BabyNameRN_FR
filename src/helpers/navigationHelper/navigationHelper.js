@@ -16,6 +16,7 @@ import ByReligion from "../../screens/byReligion";
 import NameListing from "../../screens/nameListing";
 import WalkThrough from "../../screens/walkthrough";
 import SideMenu from "./sideMenu";
+import NameDetails from "../../screens/nameDetail/nameDetail";
 
 // here is our app screen stack
 const ApplicationStack = createNativeStackNavigator();
@@ -72,6 +73,12 @@ function AppStack() {
         headerMode="none"
         name="WalkThrough"
         component={WalkThrough}
+        options={{ headerShown: false }}
+      />
+      <ApplicationStack.Screen
+        headerMode="none"
+        name="NameDetails"
+        component={NameDetails}
         options={{ headerShown: false }}
       />
     </ApplicationStack.Navigator>

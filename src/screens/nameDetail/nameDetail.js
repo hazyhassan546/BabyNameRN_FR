@@ -174,16 +174,8 @@ const DATA = [
   },
 ];
 
-const Item = ({ item, index, gotoDetails }) => (
-  <NameListCard
-    item={item}
-    index={index}
-    gotoDetails={() => {
-      gotoDetails();
-    }}
-  />
-);
-export default class NameListing extends Component {
+const Item = ({ item, index }) => <NameListCard item={item} index={index} />;
+export default class NameDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -221,28 +213,11 @@ export default class NameListing extends Component {
             marginBottom: GetOptimalHieght(30),
           }}
         >
-          <GenderOptions />
-          <View style={{ flexDirection: "row" }}>
-            <ValuePickerModal
-              onPress={() => {
-                this.props.navigation.navigate("ByReligion");
-              }}
-            />
-            <SearchBar />
-          </View>
         </View>
         <SectionList
           sections={DATA}
           keyExtractor={(item, index) => item + index}
-          renderItem={({ item, index }) => (
-            <Item
-              item={item}
-              index={index}
-              gotoDetails={() => {
-                this.props.navigation.navigate("NameDetails", { data: "Ali" });
-              }}
-            />
-          )}
+          renderItem={({ item, index }) => <Item item={item} index={index} />}
           renderSectionHeader={({ section: { title } }) => (
             <View style={styles.headerBox}>
               <Text style={styles.header}>{title}</Text>
