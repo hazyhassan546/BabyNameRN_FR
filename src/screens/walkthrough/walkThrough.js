@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
 import images from "../../common/images";
 import { Icon } from "react-native-elements";
+import SplashScreen from "react-native-splash-screen";
+
 import {
   GetOptimalHieght,
   GetOptimalWidth,
@@ -35,6 +37,12 @@ const slides = [
 ];
 
 export default class WalkThrough extends React.Component {
+  componentDidMount() {
+    // do stuff while splash screen is shown
+    // After having done stuff (such as async tasks) hide the splash screen
+    SplashScreen.hide();
+  }
+
   _renderItem = ({ item }) => {
     return (
       <View>
@@ -51,12 +59,7 @@ export default class WalkThrough extends React.Component {
     return (
       <View style={styles.buttonCircle}>
         <Text style={styles.nextText}>next</Text>
-        <Icon
-          name="right"
-          type={"antdesign"}
-          size={18}
-          color={COLORS.LIGHT_BLUE}
-        />
+        <Icon name="right" type={"antdesign"} size={18} color={"#5AC5CB"} />
       </View>
     );
   };
@@ -72,14 +75,22 @@ export default class WalkThrough extends React.Component {
   _renderSkipButton = () => {
     return (
       <View style={styles.buttonCircle}>
-        <Text style={styles.nextText}>Skip</Text>
+        <Text style={styles.nextText}>skip</Text>
       </View>
     );
+  };
+
+  _onDone = () => {
+    this.props.navigation.reset({
+      index: 0,
+      routes: [{ name: "Home" }],
+    });
   };
 
   render() {
     return (
       <AppIntroSlider
+        keyExtractor={(item) => item.key.toString()}
         renderItem={this._renderItem}
         data={slides}
         renderDoneButton={this._renderDoneButton}
@@ -88,6 +99,7 @@ export default class WalkThrough extends React.Component {
         activeDotStyle={styles.activeDot}
         dotStyle={styles.Dot}
         onDone={this._onDone}
+        showSkipButton
       />
     );
   }
@@ -96,25 +108,29 @@ export default class WalkThrough extends React.Component {
 const styles = StyleSheet.create({
   activeDot: {
     width: GetOptimalWidth(40),
-    height:8,
-    backgroundColor: COLORS.LIGHT_BLUE,
+    height: 8,
+    backgroundColor: "#5AC5CB",
+    marginTop: -390,
   },
   Dot: {
-    height:8,
+    height: 8,
     width: GetOptimalWidth(15),
     backgroundColor: COLORS.WHITE,
+    marginTop: -390,
   },
   buttonArea: {
     backgroundColor: "red",
   },
   nextText: {
     fontSize: scaledFontSize(16),
-    color: COLORS.LIGHT_BLUE,
+    color: "#5AC5CB",
     fontWeight: "bold",
   },
   buttonCircle: {
     flexDirection: "row",
     alignItems: "center",
+    paddingHorizontal: 40,
+    marginTop: -350,
   },
   imageStyle: {
     width: "100%",
