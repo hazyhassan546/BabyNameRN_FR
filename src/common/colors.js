@@ -6,7 +6,7 @@ const COLORS = {
   REDISH: "#E46A6A",
   PINKISH: "#E49F9F",
   LIGHT_BLUE: "#2BAFF6",
-  SKY_BLUE: "#DDEBF288",
+  SKY_BLUE: "#DDEBF2",
 };
 
 const lighten = (value) => {

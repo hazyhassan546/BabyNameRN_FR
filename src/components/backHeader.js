@@ -27,7 +27,7 @@ export default class BackHeader extends Component {
             height:
               Platform.OS === "ios"
                 ? GetOptimalHieght(30)
-                : GetOptimalHieght(20),
+                : GetOptimalHieght(10),
           }}
         ></View>
         <View style={styles.container}>

@@ -18,7 +18,7 @@ export default class NameListCard extends Component {
           styles.item,
           {
             backgroundColor:
-              index % 2 === 0 ? COLORS.SKY_BLUE : COLORS.WHITE + "33",
+              index % 2 === 0 ? COLORS.SKY_BLUE : COLORS.WHITE,
           },
         ]}
       >
