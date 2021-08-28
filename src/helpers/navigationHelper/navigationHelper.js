@@ -26,7 +26,13 @@ const Drawer = createDrawerNavigator();
 
 function AppStack() {
   return (
-    <ApplicationStack.Navigator initialRouteName={"Home"}>
+    <ApplicationStack.Navigator initialRouteName={"WalkThrough"}>
+      <ApplicationStack.Screen
+        headerMode="none"
+        name="WalkThrough"
+        component={WalkThrough}
+        options={{ headerShown: false }}
+      />
       <ApplicationStack.Screen
         headerMode="none"
         name="Home"
@@ -67,12 +73,6 @@ function AppStack() {
         headerMode="none"
         name="NameListing"
         component={NameListing}
-        options={{ headerShown: false }}
-      />
-      <ApplicationStack.Screen
-        headerMode="none"
-        name="WalkThrough"
-        component={WalkThrough}
         options={{ headerShown: false }}
       />
       <ApplicationStack.Screen

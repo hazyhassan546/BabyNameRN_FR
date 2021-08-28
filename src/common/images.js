@@ -20,6 +20,9 @@ const letters = require("../assets/letters.png");
 const both = require("../assets/both.png");
 const down = require("../assets/down.png");
 const home = require("../assets/Home.png");
+const slide1 = require("../assets/slide1.png");
+const slide2 = require("../assets/slide2.png");
+const slide3 = require("../assets/slide3.png");
 
 export default Images = {
   home,
@@ -44,4 +47,7 @@ export default Images = {
   jews,
   sikh,
   christian,
+  slide1,
+  slide2,
+  slide3,
 };
