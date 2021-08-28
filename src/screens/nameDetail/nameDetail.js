@@ -10,6 +10,7 @@ import {
 import COLORS from "../../common/colors";
 import images from "../../common/images";
 import BackHeader from "../../components/backHeader";
+import DetailsCard from "../../components/cards/detailsCard";
 import NameListCard from "../../components/cards/nameListCard";
 import GenderOptions from "../../components/genderOptions";
 import ValuePickerModal from "../../components/models/valuePickerModal";
@@ -188,6 +189,10 @@ export default class NameDetails extends Component {
     });
   }
 
+  renderHeader = () => {
+    return <DetailsCard />;
+  };
+
   render() {
     return (
       <ImageBackground
@@ -212,10 +217,10 @@ export default class NameDetails extends Component {
             alignItems: "center",
             marginBottom: GetOptimalHieght(30),
           }}
-        >
-        </View>
+        ></View>
         <SectionList
           sections={DATA}
+          ListHeaderComponent={this.renderHeader}
           keyExtractor={(item, index) => item + index}
           renderItem={({ item, index }) => <Item item={item} index={index} />}
           renderSectionHeader={({ section: { title } }) => (
