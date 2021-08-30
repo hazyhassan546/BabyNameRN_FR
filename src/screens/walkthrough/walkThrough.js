@@ -11,6 +11,7 @@ import {
   scaledFontSize,
 } from "../../helpers/commonHelpers/helpers";
 import COLORS from "../../common/colors";
+import { commonStyle } from "../../common/styles";
 
 const slides = [
   {
@@ -51,7 +52,6 @@ export default class WalkThrough extends React.Component {
           <Text style={styles.title}>{item.title}</Text>
           <Text style={styles.desc}>{item.text}</Text>
         </View>
-        <View style={styles.buttonArea}></View>
       </View>
     );
   };
@@ -110,13 +110,15 @@ const styles = StyleSheet.create({
     width: GetOptimalWidth(40),
     height: 8,
     backgroundColor: "#5AC5CB",
-    marginTop: -390,
+    ...commonStyle.elevatedShadow,
+    marginTop: -20,
   },
   Dot: {
     height: 8,
     width: GetOptimalWidth(15),
     backgroundColor: COLORS.WHITE,
-    marginTop: -390,
+    ...commonStyle.elevatedShadow,
+    marginTop: -20,
   },
   buttonArea: {
     backgroundColor: "red",
@@ -130,7 +132,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 40,
-    marginTop: -350,
   },
   imageStyle: {
     width: "100%",

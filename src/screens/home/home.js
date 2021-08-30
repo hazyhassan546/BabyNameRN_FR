@@ -105,6 +105,7 @@ export default class Home extends Component {
           keyExtractor={(item) => item.title}
           data={typesData}
           contentContainerStyle={{
+            flex: 1,
             alignItems: "center",
           }}
           showsVerticalScrollIndicator={false}
