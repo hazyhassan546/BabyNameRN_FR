@@ -20,160 +20,6 @@ import {
   scaledFontSize,
 } from "../../helpers/commonHelpers/helpers";
 
-const DATA = [
-  {
-    title: "A",
-    data: [
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-  {
-    title: "B",
-    data: [
-      {
-        name: "Bilal",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Bilal",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Bilal",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Bilal",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-  {
-    title: "C",
-    data: [
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-  {
-    title: "D",
-    data: [
-      {
-        name: "Doe",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Doe",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-  {
-    title: "E",
-    data: [
-      {
-        name: "Elia",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Elia",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-];
-
 const Item = ({ item, index, gotoDetails }) => (
   <NameListCard
     item={item}
@@ -223,17 +69,22 @@ export default class NameListing extends Component {
         >
           <GenderOptions {...this.props} />
           <View style={{ flexDirection: "row" }}>
-            <ValuePickerModal {...this.props}
+            <ValuePickerModal
+              {...this.props}
               onPress={() => {
                 this.props.navigation.navigate("ByReligion");
               }}
             />
-            <SearchBar  {...this.props}/>
+            <SearchBar {...this.props} />
           </View>
         </View>
         <SectionList
-          sections={DATA}
+          sections={this.props?.namesData?.namesList}
           keyExtractor={(item, index) => item + index}
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={() => {
+            return <Text>ello</Text>;
+          }}
           renderItem={({ item, index }) => (
             <Item
               item={item}
@@ -245,7 +96,7 @@ export default class NameListing extends Component {
           )}
           renderSectionHeader={({ section: { title } }) => (
             <View style={styles.headerBox}>
-              <Text style={styles.header}>{title}</Text>
+              <Text style={styles.header}>{title.toUpperCase()}</Text>
             </View>
           )}
         />
