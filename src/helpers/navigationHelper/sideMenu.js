@@ -6,6 +6,7 @@ import {
   View,
   ImageBackground,
   Image,
+  Linking,
 } from "react-native";
 import { Icon } from "react-native-elements";
 import COLORS from "../../common/colors";
@@ -114,13 +115,26 @@ export default class SideMenu extends Component {
         <View style={styles.bottomView}>
           <Text style={styles.tabText}>{"Follow Us"}</Text>
           <View style={styles.socialImagesArea}>
-            <TouchableOpacity style={styles.imageWrap}>
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL("https://www.facebook.com/babynamemeaningz/");
+              }}
+              style={styles.imageWrap}
+            >
               <Image source={images.faceBook} style={styles.socialImages} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.imageWrap}>
+            <TouchableOpacity
+             onPress={() => {
+              Linking.openURL("https://twitter.com/");
+            }}
+            style={styles.imageWrap}>
               <Image source={images.twitter} style={styles.socialImages} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.imageWrap}>
+            <TouchableOpacity
+             onPress={() => {
+              Linking.openURL("https://www.instagram.com/");
+            }}
+            style={styles.imageWrap}>
               <Image source={images.instagram} style={styles.socialImages} />
             </TouchableOpacity>
           </View>
