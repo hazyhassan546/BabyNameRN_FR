@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View, TextInput } from "react-native";
+import { Text, StyleSheet, View, TextInput, Keyboard } from "react-native";
 import COLORS from "../common/colors";
 import { commonStyle } from "../common/styles";
 import {
@@ -15,21 +15,40 @@ export default class SearchBar extends Component {
       textValue: "",
     };
   }
+
+  submitForm = () => {
+    let data = {
+      keyword: this.props?.namesData?.keyword,
+      religion: this.props?.namesData?.religion,
+      gender: this.props?.namesData?.gender,
+      alphabet: "",
+    };
+    this.props.getNames(data);
+    this.props.navigation.navigate("NameListing", {
+      data: "By Keyword",
+    });
+    Keyboard.dismiss();
+  };
+
   render() {
     return (
       <View style={styles.container}>
         <TextInput
           style={styles.inputStyle}
-          value={this.state.textValue}
+          value={this.props?.namesData?.keyword}
           placeholder={"Search Your Name"}
           placeholderTextColor={COLORS.BLACK}
           onChangeText={(text) => {
-            this.setState({
-              textValue: text,
-            });
+            this.props.setKeyword(text);
           }}
+          onSubmitEditing={this.submitForm}
         />
-        <Icon name="search" type="EvilIcons" color={COLORS.BLACK} />
+        <Icon
+          name="search"
+          type="EvilIcons"
+          color={COLORS.BLACK}
+          onPress={this.submitForm}
+        />
       </View>
     );
   }

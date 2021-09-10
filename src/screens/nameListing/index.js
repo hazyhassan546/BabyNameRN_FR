@@ -1,2 +1,3 @@
+import { nameConnect } from "../../redux/connectors/nameConnect";
 import NameListing from "./nameListing";
-export default NameListing;
+export default nameConnect()(NameListing);

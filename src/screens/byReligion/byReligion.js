@@ -70,7 +70,7 @@ export default class ByReligion extends Component {
             );
           }}
           showsVerticalScrollIndicator={false}
-          ListHeaderComponent={<GenderOptions />}
+          ListHeaderComponent={<GenderOptions {...this.props} />}
         />
       </ImageBackground>
     );

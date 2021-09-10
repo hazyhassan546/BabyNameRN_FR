@@ -1,2 +1,3 @@
+import { nameConnect } from "../../redux/connectors/nameConnect";
 import ByAlphabets from "./byAlphabets";
-export default ByAlphabets;
+export default nameConnect()(ByAlphabets);

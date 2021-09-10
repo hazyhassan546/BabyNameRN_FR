@@ -38,22 +38,40 @@ export default class Home extends Component {
   selectOption = (option) => {
     switch (option.title) {
       case "Name of boys":
+        this.props.setGender({
+          value: "Boy",
+          id: 0,
+        });
+        this.props.setKeyword("");
         this.props.navigation.navigate("NameListing", { data: option.title });
         break;
       case "Name of girls":
+        this.props.setGender({
+          value: "Girls",
+          id: 1,
+        });
+        this.props.setKeyword("");
         this.props.navigation.navigate("NameListing", { data: option.title });
         break;
       case "Name of both":
+        this.props.setGender({
+          value: "",
+          id: 2,
+        });
+        this.props.setKeyword("");
         this.props.navigation.navigate("NameListing", { data: option.title });
         break;
       case "Search Alphabetic":
+        this.props.setKeyword("");
         this.props.navigation.navigate("ByAlphabets");
         break;
       case "Search Religious":
+        this.props.setKeyword("");
         this.props.navigation.navigate("ByReligion");
         break;
       case "Trending names":
-        // this.props.navigation.navigate("Home");
+        this.props.setKeyword("");
+        this.props.navigation.navigate("Trending");
         break;
       default:
         break;
@@ -91,14 +109,15 @@ export default class Home extends Component {
                 marginBottom: GetOptimalHieght(30),
               }}
             >
-              <GenderOptions />
+              <GenderOptions {...this.props} />
               <View style={{ flexDirection: "row" }}>
                 <ValuePickerModal
+                  {...this.props}
                   onPress={() => {
                     this.props.navigation.navigate("ByReligion");
                   }}
                 />
-                <SearchBar />
+                <SearchBar {...this.props} />
               </View>
             </View>
           }

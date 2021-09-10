@@ -15,6 +15,7 @@ import ByAlphabets from "../../screens/byAlphabets";
 import ByReligion from "../../screens/byReligion";
 import NameListing from "../../screens/nameListing";
 import WalkThrough from "../../screens/walkthrough";
+import Trending from "../../screens/trending";
 import SideMenu from "./sideMenu";
 import NameDetails from "../../screens/nameDetail/nameDetail";
 
@@ -79,6 +80,12 @@ function AppStack() {
         headerMode="none"
         name="NameDetails"
         component={NameDetails}
+        options={{ headerShown: false }}
+      />
+      <ApplicationStack.Screen
+        headerMode="none"
+        name="Trending"
+        component={Trending}
         options={{ headerShown: false }}
       />
     </ApplicationStack.Navigator>

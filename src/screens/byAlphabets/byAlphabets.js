@@ -167,14 +167,14 @@ export default class ByAlphabets extends Component {
                 marginBottom: GetOptimalHieght(30),
               }}
             >
-              <GenderOptions />
+              <GenderOptions {...this.props} />
               <View style={{ flexDirection: "row" }}>
-                <ValuePickerModal
+                <ValuePickerModal {...this.props}
                   onPress={() => {
                     this.props.navigation.navigate("ByReligion");
                   }}
                 />
-                <SearchBar />
+                <SearchBar  {...this.props}/>
               </View>
             </View>
           }

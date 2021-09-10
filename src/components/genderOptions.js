@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Text, StyleSheet, View } from "react-native";
 import COLORS from "../common/colors";
 import { commonStyle } from "../common/styles";
+import { nameConnect } from "../redux/connectors/nameConnect";
 import {
   GetOptimalHieght,
   GetOptimalWidth,
@@ -9,35 +10,28 @@ import {
 } from "../helpers/commonHelpers/helpers";
 import CheckBox from "react-native-check-box";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import ReligionCard from "./cards/religionCard";
 
 const data = [
   {
     lable: "Boy",
     id: 0,
+    value: "Boy",
   },
   {
     lable: "Girl",
     id: 1,
+    value: "Girl",
   },
   {
     lable: "Both",
     id: 2,
+    value: "",
   },
 ];
 
-export default class GenderOptions extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedIndex: 0,
-    };
-  }
-
+class GenderOptions extends Component {
   selectOption = (i) => {
-    this.setState({
-      selectedIndex: i,
-    });
+    this.props.setGender(data[i]);
   };
 
   render() {
@@ -52,7 +46,7 @@ export default class GenderOptions extends Component {
                 onClick={() => {
                   this.selectOption(i);
                 }}
-                isChecked={obj.id == this.state.selectedIndex}
+                isChecked={obj.id == this.props?.namesData?.genderIndex}
                 rightText={obj.lable}
                 rightTextStyle={styles.text}
                 checkedImage={
@@ -73,6 +67,8 @@ export default class GenderOptions extends Component {
     );
   }
 }
+
+export default GenderOptions;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,2 +1,3 @@
+import { nameConnect } from "../../redux/connectors/nameConnect";
 import Favorites from "./favourites";
-export default Favorites;
+export default nameConnect()(Favorites);

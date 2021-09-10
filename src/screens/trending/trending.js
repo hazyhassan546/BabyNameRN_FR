@@ -183,7 +183,7 @@ const Item = ({ item, index, gotoDetails }) => (
     }}
   />
 );
-export default class NameListing extends Component {
+export default class Trending extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -192,7 +192,7 @@ export default class NameListing extends Component {
   }
   componentDidMount() {
     this.setState({
-      title: this.props.route.params.data,
+      title: "Trending Names",
     });
   }
 
@@ -215,7 +215,7 @@ export default class NameListing extends Component {
             this.props.navigation.navigate("Home");
           }}
         />
-        <View
+        {/* <View
           style={{
             alignItems: "center",
             marginBottom: GetOptimalHieght(30),
@@ -230,7 +230,7 @@ export default class NameListing extends Component {
             />
             <SearchBar  {...this.props}/>
           </View>
-        </View>
+        </View> */}
         <SectionList
           sections={DATA}
           keyExtractor={(item, index) => item + index}
