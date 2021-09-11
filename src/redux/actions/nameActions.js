@@ -12,6 +12,13 @@ import {
   SET_GENDER,
   SET_KEYWORD,
   SET_RELIGION,
+  SET_ALPHABET,
+  SET_LOADING,
+  GET_RELATED_NAMES,
+  GET_RELATED_NAMES_SUCCESS,
+  GET_RELATED_NAMES_ERROR,
+  CLEAR_RELATED_NAMES,
+  SET_DETAIL_ITEM,
 } from "../types/types";
 
 export const nameActionCreator = {
@@ -22,6 +29,11 @@ export const nameActionCreator = {
   getTrendingNamesSuccess: createAction(GET_TRENDING_NAMES_SUCCESS),
   getTrendingNamesError: createAction(GET_TRENDING_NAMES_ERROR),
 
+  getRelatedNames: createAction(GET_RELATED_NAMES),
+  getRelatedNamesSuccess: createAction(GET_RELATED_NAMES_SUCCESS),
+  getRelatedNamesError: createAction(GET_RELATED_NAMES_ERROR),
+  clearRelatedNames: createAction(CLEAR_RELATED_NAMES),
+  setDetailItem: createAction(SET_DETAIL_ITEM),
   ////
 
   setKeyword: createAction(SET_KEYWORD),
@@ -30,4 +42,8 @@ export const nameActionCreator = {
   clearGender: createAction(CLEAR_GENDER),
   setReligion: createAction(SET_RELIGION),
   clearReligion: createAction(CLEAR_RELIGION),
+  setAlphabet: createAction(SET_ALPHABET),
+
+  /////
+  setLoading: createAction(SET_LOADING),
 };

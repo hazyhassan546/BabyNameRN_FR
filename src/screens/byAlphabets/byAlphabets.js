@@ -127,6 +127,18 @@ const Alphabets = [
 ];
 
 export default class ByAlphabets extends Component {
+  GetNames = (alphabet) => {
+    let data = {
+      keyword: "",
+      religion: this.props?.namesData?.religion,
+      gender: this.props?.namesData?.gender,
+      alphabet: alphabet,
+    };
+    this.props.setLoading(true);
+    this.props.getNames(data);
+    this.props.navigation.navigate("NameListing", { data: "By Alphabet" });
+  };
+
   render() {
     return (
       <ImageBackground
@@ -137,16 +149,13 @@ export default class ByAlphabets extends Component {
         }}
         resizeMode="cover"
       >
-        <HomeHeader
-          openDrawer={() => this.props.navigation.openDrawer()}
+        <BackHeader
+          title={"Search Alphabetic"}
+          onBackPress={() => {
+            this.props.navigation.goBack();
+          }}
           gotoHome={() => {
             this.props.navigation.navigate("Home");
-          }}
-          like={() => {
-            alert("Like");
-          }}
-          share={() => {
-            alert("Share");
           }}
         />
         <FlatList
@@ -158,7 +167,13 @@ export default class ByAlphabets extends Component {
           showsVerticalScrollIndicator={false}
           numColumns={3}
           renderItem={({ item }) => {
-            return <AlphabetCard keyword={item.key} color={item.color} />;
+            return (
+              <AlphabetCard
+                keyword={item.key}
+                color={item.color}
+                onPress={this.GetNames}
+              />
+            );
           }}
           ListHeaderComponent={
             <View
@@ -169,12 +184,13 @@ export default class ByAlphabets extends Component {
             >
               <GenderOptions {...this.props} />
               <View style={{ flexDirection: "row" }}>
-                <ValuePickerModal {...this.props}
+                <ValuePickerModal
+                  {...this.props}
                   onPress={() => {
                     this.props.navigation.navigate("ByReligion");
                   }}
                 />
-                <SearchBar  {...this.props}/>
+                <SearchBar {...this.props} />
               </View>
             </View>
           }

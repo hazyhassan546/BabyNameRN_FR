@@ -11,11 +11,20 @@ import {
   SET_GENDER,
   SET_KEYWORD,
   SET_RELIGION,
+  SET_ALPHABET,
+  SET_LOADING,
+  GET_RELATED_NAMES,
+  GET_RELATED_NAMES_ERROR,
+  CLEAR_RELATED_NAMES,
+  GET_RELATED_NAMES_SUCCESS,
+  SET_DETAIL_ITEM,
 } from "../types/types";
 
 const defaultState = {
   namesList: [],
   trendingNamesList: [],
+  relatedNamesList: [],
+  detailItem: {},
   getNameSuccess: false,
   getNameError: false,
   error: "",
@@ -23,6 +32,8 @@ const defaultState = {
   genderIndex: 0,
   religion: "",
   keyword: "",
+  alphabet: "",
+  loading: false,
 };
 export default function nameReducer(state = defaultState, action = {}) {
   const { type, payload } = action;
@@ -38,7 +49,7 @@ export default function nameReducer(state = defaultState, action = {}) {
     case GET_NAMES_SUCCESS:
       return {
         ...state,
-        loading: true,
+        loading: false,
         getNameSuccess: true,
         getNameError: false,
         error: "",
@@ -47,10 +58,42 @@ export default function nameReducer(state = defaultState, action = {}) {
     case GET_NAMES_ERROR:
       return {
         ...state,
-        loading: true,
+        loading: false,
         getNameSuccess: false,
         getNameError: true,
         error: payload,
+      };
+
+    case GET_RELATED_NAMES:
+      return {
+        ...state,
+        loading: true,
+        getNameSuccess: false,
+        getNameError: false,
+        error: "",
+      };
+    case GET_RELATED_NAMES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        getNameSuccess: true,
+        getNameError: false,
+        error: "",
+        relatedNamesList: payload,
+      };
+    case GET_RELATED_NAMES_ERROR:
+      return {
+        ...state,
+        loading: false,
+        getNameSuccess: false,
+        getNameError: true,
+        error: payload,
+        relatedNamesList: [],
+      };
+    case CLEAR_RELATED_NAMES:
+      return {
+        ...state,
+        relatedNamesList: [],
       };
     case GET_TRENDING_NAMES:
       return {
@@ -63,7 +106,7 @@ export default function nameReducer(state = defaultState, action = {}) {
     case GET_TRENDING_NAMES_SUCCESS:
       return {
         ...state,
-        loading: true,
+        loading: false,
         getNameSuccess: true,
         getNameError: false,
         error: "",
@@ -72,7 +115,7 @@ export default function nameReducer(state = defaultState, action = {}) {
     case GET_TRENDING_NAMES_ERROR:
       return {
         ...state,
-        loading: true,
+        loading: false,
         getNameSuccess: false,
         getNameError: true,
         error: payload,
@@ -107,6 +150,21 @@ export default function nameReducer(state = defaultState, action = {}) {
       return {
         ...state,
         keyword: "",
+      };
+    case SET_ALPHABET:
+      return {
+        ...state,
+        alphabet: payload,
+      };
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: payload,
+      };
+    case SET_DETAIL_ITEM:
+      return {
+        ...state,
+        detailItem: payload,
       };
     default:
       return state;

@@ -39,6 +39,36 @@ function* getNameSaga({ payload }) {
   }
 }
 
+function* getRelatedNameSaga({ payload }) {
+  try {
+    const response = yield call(getNamesApi, payload);
+    alphabet = alpha.map((x) => {
+      return { title: String.fromCharCode(x).toLowerCase(), data: [] };
+    });
+    if (response?.length > 0) {
+      response.map((item, index) => {
+        const word = item.name.charAt(0).toLowerCase();
+        let alphabetsString = "abcdefghijklmnopqrstuvwxyz";
+        if (alphabetsString.indexOf(word) > -1) {
+          alphabet[alphabetsString.indexOf(word)].data.push(item);
+        }
+      });
+    }
+
+    // console.log(alphabet);
+    const result = [];
+    yield alphabet.map((item, index) => {
+      if (item?.data?.length > 0) {
+        result.push(item);
+      }
+    });
+    yield put(nameActionCreator.getRelatedNamesSuccess(result));
+  } catch (err) {
+    console.log(err);
+    yield put(nameActionCreator.getRelatedNamesError(err));
+  }
+}
+
 function* getTrendingNameSaga({ payload }) {
   try {
     const response = yield call(getTrendingNamesApi, payload);
@@ -63,6 +93,17 @@ function* getTrendingNameWatchersSaga() {
   }
 }
 
+function* getRelatedNameWatchersSaga() {
+  while (true) {
+    const action = yield take(GET_TRENDING_NAMES);
+    yield* getRelatedNameSaga(action);
+  }
+}
+
 export default function* () {
-  yield all([fork(getNamesWatchersSaga), fork(getTrendingNameWatchersSaga)]);
+  yield all([
+    fork(getNamesWatchersSaga),
+    fork(getTrendingNameWatchersSaga),
+    fork(getRelatedNameWatchersSaga),
+  ]);
 }

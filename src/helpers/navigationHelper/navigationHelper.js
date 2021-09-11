@@ -17,7 +17,7 @@ import NameListing from "../../screens/nameListing";
 import WalkThrough from "../../screens/walkthrough";
 import Trending from "../../screens/trending";
 import SideMenu from "./sideMenu";
-import NameDetails from "../../screens/nameDetail/nameDetail";
+import NameDetails from "../../screens/nameDetail";
 
 // here is our app screen stack
 const ApplicationStack = createNativeStackNavigator();

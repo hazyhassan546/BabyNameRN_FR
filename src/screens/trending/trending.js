@@ -6,6 +6,9 @@ import {
   SectionList,
   StatusBar,
   ImageBackground,
+  FlatList,
+  Image,
+  ActivityIndicator,
 } from "react-native";
 import COLORS from "../../common/colors";
 import images from "../../common/images";
@@ -19,160 +22,6 @@ import {
   GetOptimalWidth,
   scaledFontSize,
 } from "../../helpers/commonHelpers/helpers";
-
-const DATA = [
-  {
-    title: "A",
-    data: [
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-  {
-    title: "B",
-    data: [
-      {
-        name: "Bilal",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Bilal",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Bilal",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Bilal",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-  {
-    title: "C",
-    data: [
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-  {
-    title: "D",
-    data: [
-      {
-        name: "Doe",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Doe",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-  {
-    title: "E",
-    data: [
-      {
-        name: "Elia",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Elia",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-];
 
 const Item = ({ item, index, gotoDetails }) => (
   <NameListCard
@@ -196,6 +45,26 @@ export default class Trending extends Component {
     });
   }
 
+  ListEmptyComponent = () => {
+    return (
+      <View
+        style={{
+          height: GetOptimalHieght(400),
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Image source={images.missing} style={styles.imageStyle} />
+        <Text>{"Sorry! your searched names does not exist"}</Text>
+        <Text style={styles.textDesc}>{"Try with another name"}</Text>
+      </View>
+    );
+  };
+
+  componentWillUnmount() {
+    this.props.clearRelatedNames();
+  }
+
   render() {
     return (
       <ImageBackground
@@ -215,40 +84,29 @@ export default class Trending extends Component {
             this.props.navigation.navigate("Home");
           }}
         />
-        {/* <View
-          style={{
-            alignItems: "center",
-            marginBottom: GetOptimalHieght(30),
-          }}
-        >
-          <GenderOptions {...this.props} />
-          <View style={{ flexDirection: "row" }}>
-            <ValuePickerModal {...this.props}
-              onPress={() => {
-                this.props.navigation.navigate("ByReligion");
-              }}
-            />
-            <SearchBar  {...this.props}/>
+        {this.props?.namesData?.loading === true ? (
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <ActivityIndicator size="large" color={COLORS.BLACK} />
           </View>
-        </View> */}
-        <SectionList
-          sections={DATA}
-          keyExtractor={(item, index) => item + index}
-          renderItem={({ item, index }) => (
-            <Item
-              item={item}
-              index={index}
-              gotoDetails={() => {
-                this.props.navigation.navigate("NameDetails", { data: "Ali" });
-              }}
-            />
-          )}
-          renderSectionHeader={({ section: { title } }) => (
-            <View style={styles.headerBox}>
-              <Text style={styles.header}>{title}</Text>
-            </View>
-          )}
-        />
+        ) : (
+          <FlatList
+            data={this.props.namesData.trendingNamesList}
+            keyExtractor={(item, index) => item + index}
+            ListEmptyComponent={this.ListEmptyComponent}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item, index }) => (
+              <Item
+                item={item}
+                index={index}
+                gotoDetails={() => {
+                  this.props.navigation.navigate("NameDetails", { data: item });
+                }}
+              />
+            )}
+          />
+        )}
       </ImageBackground>
     );
   }
@@ -282,5 +140,15 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+  },
+  textDesc: {
+    fontSize: 14,
+    color: COLORS.APP_BLUE,
+  },
+  imageStyle: {
+    width: GetOptimalHieght(100),
+    height: GetOptimalHieght(100),
+    resizeMode: "contain",
+    marginBottom: GetOptimalHieght(30),
   },
 });

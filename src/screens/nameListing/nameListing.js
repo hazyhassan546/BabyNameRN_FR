@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { ActivityIndicator } from "react-native";
 import {
   Text,
   StyleSheet,
@@ -6,6 +7,7 @@ import {
   SectionList,
   StatusBar,
   ImageBackground,
+  Image,
 } from "react-native";
 import COLORS from "../../common/colors";
 import images from "../../common/images";
@@ -41,6 +43,22 @@ export default class NameListing extends Component {
       title: this.props.route.params.data,
     });
   }
+
+  ListEmptyComponent = () => {
+    return (
+      <View
+        style={{
+          height: GetOptimalHieght(400),
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Image source={images.missing} style={styles.imageStyle} />
+        <Text>{"Sorry! your searched names does not exist"}</Text>
+        <Text style={styles.textDesc}>{"Try with another name"}</Text>
+      </View>
+    );
+  };
 
   render() {
     return (
@@ -78,28 +96,37 @@ export default class NameListing extends Component {
             <SearchBar {...this.props} />
           </View>
         </View>
-        <SectionList
-          sections={this.props?.namesData?.namesList}
-          keyExtractor={(item, index) => item + index}
-          showsVerticalScrollIndicator={false}
-          ListEmptyComponent={() => {
-            return <Text>ello</Text>;
-          }}
-          renderItem={({ item, index }) => (
-            <Item
-              item={item}
-              index={index}
-              gotoDetails={() => {
-                this.props.navigation.navigate("NameDetails", { data: "Ali" });
-              }}
-            />
-          )}
-          renderSectionHeader={({ section: { title } }) => (
-            <View style={styles.headerBox}>
-              <Text style={styles.header}>{title.toUpperCase()}</Text>
-            </View>
-          )}
-        />
+        {this.props?.namesData?.loading === true ? (
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <ActivityIndicator size="large" color={COLORS.BLACK} />
+          </View>
+        ) : (
+          <SectionList
+            sections={this.props?.namesData?.namesList}
+            keyExtractor={(item, index) => item + index}
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={this.ListEmptyComponent}
+            renderItem={({ item, index }) => (
+              <Item
+                item={item}
+                index={index}
+                gotoDetails={() => {
+                  this.props.setDetailItem(item);
+                  setTimeout(() => {
+                    this.props.navigation.navigate("NameDetails");
+                  }, 200);
+                }}
+              />
+            )}
+            renderSectionHeader={({ section: { title } }) => (
+              <View style={styles.headerBox}>
+                <Text style={styles.header}>{title.toUpperCase()}</Text>
+              </View>
+            )}
+          />
+        )}
       </ImageBackground>
     );
   }
@@ -133,5 +160,15 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+  },
+  textDesc: {
+    fontSize: 14,
+    color: COLORS.APP_BLUE,
+  },
+  imageStyle: {
+    width: GetOptimalHieght(100),
+    height: GetOptimalHieght(100),
+    resizeMode: "contain",
+    marginBottom: GetOptimalHieght(30),
   },
 });

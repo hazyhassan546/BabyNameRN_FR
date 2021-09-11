@@ -12,6 +12,7 @@ export default class AlphabetCard extends Component {
   render() {
     return (
       <TouchableOpacity
+        onPress={() => this.props.onPress(this.props.keyword.toLowerCase())}
         style={[styles.container, { backgroundColor: this.props.color }]}
       >
         <Text style={styles.title}>{this.props.keyword}</Text>

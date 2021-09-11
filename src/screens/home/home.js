@@ -35,6 +35,20 @@ const typesData = [
   },
 ];
 export default class Home extends Component {
+  GetNames = () => {
+    let data = {
+      keyword: this.props?.namesData?.keyword,
+      religion: this.props?.namesData?.religion,
+      gender: this.props?.namesData?.gender,
+      alphabet: this.props?.namesData?.alphabet,
+    };
+    this.props.getNames(data);
+  };
+
+  getTrendingNames = () => {
+    this.props.getTrendingNames();
+  };
+
   selectOption = (option) => {
     switch (option.title) {
       case "Name of boys":
@@ -43,14 +57,25 @@ export default class Home extends Component {
           id: 0,
         });
         this.props.setKeyword("");
+        this.props.setAlphabet("");
+        this.props.setLoading(true);
+        setTimeout(() => {
+          this.GetNames();
+        }, 500);
+
         this.props.navigation.navigate("NameListing", { data: option.title });
         break;
       case "Name of girls":
         this.props.setGender({
-          value: "Girls",
+          value: "Girl",
           id: 1,
         });
         this.props.setKeyword("");
+        this.props.setAlphabet("");
+        this.props.setLoading(true);
+        setTimeout(() => {
+          this.GetNames();
+        }, 500);
         this.props.navigation.navigate("NameListing", { data: option.title });
         break;
       case "Name of both":
@@ -59,18 +84,38 @@ export default class Home extends Component {
           id: 2,
         });
         this.props.setKeyword("");
+        this.props.setAlphabet("");
+        this.props.setLoading(true);
+        setTimeout(() => {
+          this.GetNames();
+        }, 500);
         this.props.navigation.navigate("NameListing", { data: option.title });
         break;
       case "Search Alphabetic":
         this.props.setKeyword("");
+        this.props.setAlphabet("");
+        this.props.setLoading(true);
+        setTimeout(() => {
+          this.GetNames();
+        }, 500);
         this.props.navigation.navigate("ByAlphabets");
         break;
       case "Search Religious":
         this.props.setKeyword("");
+        this.props.setAlphabet("");
+        this.props.setLoading(true);
+        setTimeout(() => {
+          this.GetNames();
+        }, 500);
         this.props.navigation.navigate("ByReligion");
         break;
       case "Trending names":
         this.props.setKeyword("");
+        this.props.setAlphabet("");
+        this.props.setLoading(true);
+        setTimeout(() => {
+          this.getTrendingNames();
+        }, 500);
         this.props.navigation.navigate("Trending");
         break;
       default:

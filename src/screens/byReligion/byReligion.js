@@ -6,30 +6,48 @@ import BackHeader from "../../components/backHeader";
 import ReligionCard from "../../components/cards/religionCard";
 import GenderOptions from "../../components/genderOptions";
 import HomeHeader from "../../components/homeHeader";
-
 const data = [
   {
     title: "Muslims names",
     image: images.muslim,
+    value: "Islam",
   },
   {
     title: "Christian names",
     image: images.christian,
+    value: "Christianity",
   },
   {
     title: "Hindu's names",
     image: images.hindu,
+    value: "Hinduism",
   },
   {
     title: "Sikhism names",
     image: images.sikh,
+    value: "Sikh",
   },
   {
     title: "Jewish names",
     image: images.jews,
+    value: "Jewish",
   },
 ];
 export default class ByReligion extends Component {
+  GetNames = (religion) => {
+    let data = {
+      keyword: "",
+      religion: religion,
+      gender: this.props?.namesData?.gender,
+      alphabet: "",
+    };
+    this.props.setReligion(religion);
+    this.props.setLoading(true);
+    this.props.setKeyword("");
+    this.props.getNames(data);
+    this.props.navigation.navigate("NameListing", { data: "By Religion" });
+  };
+
   render() {
     return (
       <ImageBackground
@@ -40,16 +58,13 @@ export default class ByReligion extends Component {
         }}
         resizeMode="cover"
       >
-        <HomeHeader
-          openDrawer={() => this.props.navigation.openDrawer()}
+        <BackHeader
+          title={"Search Religious"}
+          onBackPress={() => {
+            this.props.navigation.goBack();
+          }}
           gotoHome={() => {
             this.props.navigation.navigate("Home");
-          }}
-          like={() => {
-            alert("Like");
-          }}
-          share={() => {
-            alert("Share");
           }}
         />
 
@@ -62,9 +77,7 @@ export default class ByReligion extends Component {
                 title={item.title}
                 image={item.image}
                 onPress={() => {
-                  this.props.navigation.navigate("NameListing", {
-                    data: "By Religion",
-                  });
+                  this.GetNames(item.value);
                 }}
               />
             );

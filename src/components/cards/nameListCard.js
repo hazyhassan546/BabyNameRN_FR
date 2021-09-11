@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import COLORS from "../../common/colors";
 import { commonStyle } from "../../common/styles";
+import Toast from "react-native-toast-message";
 import {
   GetOptimalHieght,
   GetOptimalWidth,
   scaledFontSize,
 } from "../../helpers/commonHelpers/helpers";
 import { Icon } from "react-native-elements";
+import Clipboard from "@react-native-community/clipboard";
 
 export default class NameListCard extends Component {
   render() {
@@ -17,8 +19,7 @@ export default class NameListCard extends Component {
         style={[
           styles.item,
           {
-            backgroundColor:
-              index % 2 === 0 ? COLORS.SKY_BLUE : COLORS.WHITE,
+            backgroundColor: index % 2 === 0 ? COLORS.SKY_BLUE : COLORS.WHITE,
           },
         ]}
       >
@@ -40,7 +41,19 @@ export default class NameListCard extends Component {
               color={COLORS.SIDE_MENU_TEXT}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              Clipboard.setString(
+                "Name: " + item.name + "   Meaning: " + item.meaning
+              );
+              Toast.show({
+                type: "success",
+                text1: "Name is copied to clipboard",
+                text2: "Name: " + item.name + "   Meaning: " + item.meaning,
+              });
+            }}
+          >
             <Icon
               name="copy"
               type="feather"
@@ -50,7 +63,9 @@ export default class NameListCard extends Component {
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.desc}>{item.meaning}</Text>
+        <Text numberOfLines={2} style={styles.desc}>
+          {item.meaning}
+        </Text>
         <Text style={styles.desc}>{item.religion}</Text>
         <TouchableOpacity onPress={this.props.gotoDetails}>
           <Text style={styles.link}>{"(See More...)"}</Text>

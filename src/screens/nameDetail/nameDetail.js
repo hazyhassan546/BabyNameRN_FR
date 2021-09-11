@@ -1,4 +1,6 @@
+import Clipboard from "@react-native-community/clipboard";
 import React, { Component } from "react";
+import { ActivityIndicator } from "react-native";
 import {
   Text,
   StyleSheet,
@@ -7,6 +9,7 @@ import {
   StatusBar,
   ImageBackground,
 } from "react-native";
+
 import COLORS from "../../common/colors";
 import images from "../../common/images";
 import BackHeader from "../../components/backHeader";
@@ -21,161 +24,6 @@ import {
   scaledFontSize,
 } from "../../helpers/commonHelpers/helpers";
 
-const DATA = [
-  {
-    title: "A",
-    data: [
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-  {
-    title: "B",
-    data: [
-      {
-        name: "Bilal",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Bilal",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Bilal",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Bilal",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-  {
-    title: "C",
-    data: [
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-  {
-    title: "D",
-    data: [
-      {
-        name: "Doe",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Doe",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-  {
-    title: "E",
-    data: [
-      {
-        name: "Elia",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Elia",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-];
-
-const Item = ({ item, index }) => <NameListCard item={item} index={index} />;
 export default class NameDetails extends Component {
   constructor(props) {
     super(props);
@@ -183,14 +31,45 @@ export default class NameDetails extends Component {
       title: "",
     };
   }
+
+  
+
+  Item = ({ item, index }) => {
+    return (
+      <NameListCard
+        item={item}
+        index={index}
+        gotoDetails={() => {
+          this.props.setLoading(true);
+          this.props.setDetailItem(item);
+          setTimeout(() => {
+            this.props.setLoading(false);
+          }, 300);
+        }}
+      />
+    );
+  };
+
   componentDidMount() {
-    this.setState({
-      title: this.props.route.params.data,
-    });
+    this.props.clearRelatedNames();
   }
 
+  seeRelatedNames = () => {
+    this.props.getRelatedNames({
+      keyword: this.props?.namesData?.detailItem?.name,
+      religion: this.props?.namesData?.religion,
+      gender: this.props?.namesData?.gender,
+      alphabet: "",
+    });
+  };
+
   renderHeader = () => {
-    return <DetailsCard />;
+    return (
+      <DetailsCard
+        data={this.props.namesData.detailItem}
+        seeRelatedNames={this.seeRelatedNames}
+      />
+    );
   };
 
   render() {
@@ -204,7 +83,7 @@ export default class NameDetails extends Component {
         resizeMode="cover"
       >
         <BackHeader
-          title={this.state.title}
+          title={this.props?.namesData?.detailItem?.name}
           onBackPress={() => {
             this.props.navigation.goBack();
           }}
@@ -218,17 +97,25 @@ export default class NameDetails extends Component {
             marginBottom: GetOptimalHieght(30),
           }}
         ></View>
-        <SectionList
-          sections={DATA}
-          ListHeaderComponent={this.renderHeader}
-          keyExtractor={(item, index) => item + index}
-          renderItem={({ item, index }) => <Item item={item} index={index} />}
-          renderSectionHeader={({ section: { title } }) => (
-            <View style={styles.headerBox}>
-              <Text style={styles.header}>{title}</Text>
-            </View>
-          )}
-        />
+        {this.props.namesData.loading == true ? (
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <ActivityIndicator size="large" color={COLORS.BLACK} />
+          </View>
+        ) : (
+          <SectionList
+            sections={this.props?.namesData?.namesList}
+            ListHeaderComponent={this.renderHeader}
+            keyExtractor={(item, index) => item + index}
+            renderItem={this.Item}
+            renderSectionHeader={({ section: { title } }) => (
+              <View style={styles.headerBox}>
+                <Text style={styles.header}>{title.toUpperCase()}</Text>
+              </View>
+            )}
+          />
+        )}
       </ImageBackground>
     );
   }

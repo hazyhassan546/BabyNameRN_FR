@@ -2,14 +2,17 @@ import React, { Component } from "react";
 import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import COLORS from "../../common/colors";
 import { commonStyle } from "../../common/styles";
+import Toast from "react-native-toast-message";
 import {
   GetOptimalHieght,
   GetOptimalWidth,
   scaledFontSize,
 } from "../../helpers/commonHelpers/helpers";
 import { Icon } from "react-native-elements";
+import Clipboard from "@react-native-community/clipboard";
 export default class DetailsCard extends Component {
   render() {
+    const { name, meaning, gender, numbers } = this.props.data;
     return (
       <View>
         <View style={styles.container}>
@@ -23,7 +26,7 @@ export default class DetailsCard extends Component {
               },
             ]}
           >
-            <Text style={styles.title}>Name</Text>
+            <Text style={styles.title}>{"Name"}</Text>
           </View>
           <View
             style={[
@@ -35,7 +38,7 @@ export default class DetailsCard extends Component {
               },
             ]}
           >
-            <Text style={styles.desc}>Ali</Text>
+            <Text style={styles.desc}>{name}</Text>
           </View>
         </View>
         <View style={styles.container}>
@@ -43,7 +46,7 @@ export default class DetailsCard extends Component {
             <Text style={styles.title}>Gender</Text>
           </View>
           <View style={styles.rightContainer}>
-            <Text style={styles.desc}>Male</Text>
+            <Text style={styles.desc}>{gender}</Text>
           </View>
         </View>
         <View style={styles.container}>
@@ -59,7 +62,7 @@ export default class DetailsCard extends Component {
             <Text style={styles.title}>Meaning</Text>
           </View>
           <View style={styles.rightContainer}>
-            <Text style={styles.desc}>Bahadur</Text>
+            <Text style={styles.desc}>{meaning}</Text>
           </View>
         </View>
 
@@ -73,7 +76,7 @@ export default class DetailsCard extends Component {
               },
             ]}
           >
-            <Text style={styles.title}>History</Text>
+            <Text style={styles.title}>Lucky Number</Text>
           </View>
           <View
             style={[
@@ -84,7 +87,7 @@ export default class DetailsCard extends Component {
               },
             ]}
           >
-            <Text style={styles.desc}>This is the history of this name</Text>
+            <Text style={styles.desc}>{numbers}</Text>
           </View>
         </View>
 
@@ -105,7 +108,17 @@ export default class DetailsCard extends Component {
               color={COLORS.SIDE_MENU_TEXT}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              Clipboard.setString("Name: " + name + "   Meaning: " + meaning);
+              Toast.show({
+                type: "success",
+                text1: "Name is copied to clipboard",
+                text2: "Name: " + name + "   Meaning: " + meaning,
+              });
+            }}
+          >
             <Icon
               name="copy"
               type="feather"
@@ -114,7 +127,10 @@ export default class DetailsCard extends Component {
             />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.seeMore}>
+        <TouchableOpacity
+          style={styles.seeMore}
+          onPress={this.props.seeRelatedNames}
+        >
           <Text style={styles.link}>See related names</Text>
         </TouchableOpacity>
       </View>
