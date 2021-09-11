@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, View, TouchableOpacity, Share } from "react-native";
 import COLORS from "../../common/colors";
 import { commonStyle } from "../../common/styles";
 import Toast from "react-native-toast-message";
@@ -12,6 +12,42 @@ import { Icon } from "react-native-elements";
 import Clipboard from "@react-native-community/clipboard";
 
 export default class NameListCard extends Component {
+  onShare = async (message) => {
+    try {
+      const result = await Share.share({
+        message: message,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  getReligion = () => {
+    const { item, index } = this.props;
+    if (item.cat_numaric == 3) {
+      return <Text style={styles.desc}>{"Muslim"}</Text>;
+    } else if (item.cat_numaric == 2 && item.urdu_name == "Hindi") {
+      return <Text style={styles.desc}>{"Hindu"}</Text>;
+    } else if (item.urdu_name == "Sikh") {
+      return <Text style={styles.desc}>{"Sikh"}</Text>;
+    } else if (item.origen_id == 20) {
+      return <Text style={styles.desc}>{"Christian"}</Text>;
+    } else if (item.urdu_name == "hebrew") {
+      return <Text style={styles.desc}>{"Jewish"}</Text>;
+    } else {
+      return <Text style={styles.desc}>{""}</Text>;
+    }
+  };
+
   render() {
     const { item, index } = this.props;
     return (
@@ -33,7 +69,14 @@ export default class NameListCard extends Component {
               color={COLORS.SIDE_MENU_TEXT}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              this.onShare(
+                "Name: " + item?.name + "   Meaning: " + item?.meaning
+              )
+            }
+          >
             <Icon
               name="share"
               type="SimpleLineIcons"
@@ -66,7 +109,7 @@ export default class NameListCard extends Component {
         <Text numberOfLines={2} style={styles.desc}>
           {item.meaning}
         </Text>
-        <Text style={styles.desc}>{item.religion}</Text>
+        {this.getReligion()}
         <TouchableOpacity onPress={this.props.gotoDetails}>
           <Text style={styles.link}>{"(See More...)"}</Text>
         </TouchableOpacity>

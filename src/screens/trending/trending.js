@@ -101,7 +101,10 @@ export default class Trending extends Component {
                 item={item}
                 index={index}
                 gotoDetails={() => {
-                  this.props.navigation.navigate("NameDetails", { data: item });
+                  this.props.setDetailItem(item);
+                  setTimeout(() => {
+                    this.props.navigation.navigate("NameDetails");
+                  }, 200);
                 }}
               />
             )}

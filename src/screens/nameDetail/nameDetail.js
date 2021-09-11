@@ -32,8 +32,6 @@ export default class NameDetails extends Component {
     };
   }
 
-  
-
   Item = ({ item, index }) => {
     return (
       <NameListCard
@@ -105,7 +103,7 @@ export default class NameDetails extends Component {
           </View>
         ) : (
           <SectionList
-            sections={this.props?.namesData?.namesList}
+            sections={this.props?.namesData?.relatedNamesList}
             ListHeaderComponent={this.renderHeader}
             keyExtractor={(item, index) => item + index}
             renderItem={this.Item}

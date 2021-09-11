@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, View, TouchableOpacity, Share } from "react-native";
 import COLORS from "../../common/colors";
 import { commonStyle } from "../../common/styles";
 import Toast from "react-native-toast-message";
@@ -11,6 +11,42 @@ import {
 import { Icon } from "react-native-elements";
 import Clipboard from "@react-native-community/clipboard";
 export default class DetailsCard extends Component {
+  onShare = async (message) => {
+    try {
+      const result = await Share.share({
+        message: message,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  getReligion = () => {
+    const item = this.props.data;
+    if (item.cat_numaric == 3) {
+      return <Text style={styles.desc}>{"Muslim"}</Text>;
+    } else if (item.cat_numaric == 2 && item.urdu_name == "Hindi") {
+      return <Text style={styles.desc}>{"Hindu"}</Text>;
+    } else if (item.urdu_name == "Sikh") {
+      return <Text style={styles.desc}>{"Sikh"}</Text>;
+    } else if (item.origen_id == 20) {
+      return <Text style={styles.desc}>{"Christian"}</Text>;
+    } else if (item.urdu_name == "hebrew") {
+      return <Text style={styles.desc}>{"Jewish"}</Text>;
+    } else {
+      return <Text style={styles.desc}>{""}</Text>;
+    }
+  };
+
   render() {
     const { name, meaning, gender, numbers } = this.props.data;
     return (
@@ -53,9 +89,7 @@ export default class DetailsCard extends Component {
           <View style={styles.leftContainer}>
             <Text style={styles.title}>Religion</Text>
           </View>
-          <View style={styles.rightContainer}>
-            <Text style={styles.desc}>Islam</Text>
-          </View>
+          <View style={styles.rightContainer}>{this.getReligion()}</View>
         </View>
         <View style={styles.container}>
           <View style={styles.leftContainer}>
@@ -100,7 +134,12 @@ export default class DetailsCard extends Component {
               color={COLORS.SIDE_MENU_TEXT}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              this.onShare("Name: " + name + "   Meaning: " + meaning)
+            }
+          >
             <Icon
               name="share"
               type="SimpleLineIcons"

@@ -1,7 +1,7 @@
 import { all, take, call, put, fork } from "redux-saga/effects";
 import { nameActionCreator } from "../actions/nameActions";
 import { getNamesApi, getTrendingNamesApi } from "../Api/apiCalls";
-import { GET_NAMES, GET_TRENDING_NAMES } from "../types/types";
+import { GET_NAMES, GET_RELATED_NAMES, GET_TRENDING_NAMES } from "../types/types";
 
 const alpha = Array.from(Array(26)).map((e, i) => i + 65);
 var alphabet = alpha.map((x) => {
@@ -95,7 +95,7 @@ function* getTrendingNameWatchersSaga() {
 
 function* getRelatedNameWatchersSaga() {
   while (true) {
-    const action = yield take(GET_TRENDING_NAMES);
+    const action = yield take(GET_RELATED_NAMES);
     yield* getRelatedNameSaga(action);
   }
 }

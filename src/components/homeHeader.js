@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StatusBar,
   Platform,
+  Share,
 } from "react-native";
 import COLORS from "../common/colors";
 import images from "../common/images";
@@ -16,8 +17,28 @@ import {
   GetOptimalWidth,
 } from "../helpers/commonHelpers/helpers";
 import { commonStyle } from "../common/styles";
-
 export default class HomeHeader extends Component {
+  onShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          Platform.OS === "ios"
+            ? "https://apps.apple.com"
+            : "https://play.google.com",
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -37,7 +58,7 @@ export default class HomeHeader extends Component {
           <TouchableOpacity onPress={this.props.like} style={styles.touchable}>
             <Icon size={20} name="like1" type="antdesign" color="#517fa4" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.props.share} style={styles.touchable}>
+          <TouchableOpacity onPress={this.onShare} style={styles.touchable}>
             <Icon
               size={20}
               name="share"
