@@ -49,6 +49,7 @@ export default class DetailsCard extends Component {
 
   render() {
     const { name, meaning, gender, numbers } = this.props.data;
+    const { fav } = this?.props;
     return (
       <View>
         <View style={styles.container}>
@@ -126,12 +127,18 @@ export default class DetailsCard extends Component {
         </View>
 
         <View style={styles.iconArea}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              { backgroundColor: fav ? COLORS.PINKISH : COLORS.WHITE },
+            ]}
+            onPress={this.props.addToFav}
+          >
             <Icon
               name="hearto"
               type="antdesign"
               size={17}
-              color={COLORS.SIDE_MENU_TEXT}
+              color={fav ? COLORS.WHITE : COLORS.SIDE_MENU_TEXT}
             />
           </TouchableOpacity>
           <TouchableOpacity

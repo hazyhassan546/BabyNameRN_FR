@@ -2,8 +2,6 @@ import * as React from "react";
 import { View, Text, StatusBar } from "react-native";
 import Navigator from "./src/helpers/navigationHelper/navigationHelper";
 import { Provider } from "./src/redux/provider";
-import Toast from "react-native-toast-message";
-
 class App extends React.Component {
   render() {
     return (
@@ -12,7 +10,6 @@ class App extends React.Component {
         <Provider>
           <Navigator />
         </Provider>
-        <Toast ref={(ref) => Toast.setRef(ref)} />
       </View>
     );
   }

@@ -1,3 +1,4 @@
+import Toast from "react-native-toast-message";
 import {
   CLEAR_GENDER,
   CLEAR_KEYWORD,
@@ -18,12 +19,15 @@ import {
   CLEAR_RELATED_NAMES,
   GET_RELATED_NAMES_SUCCESS,
   SET_DETAIL_ITEM,
+  ADD_TO_FAVORITE,
+  REMOVE_FROM_FAVORITE,
 } from "../types/types";
 
 const defaultState = {
   namesList: [],
   trendingNamesList: [],
   relatedNamesList: [],
+  favorites: [],
   detailItem: {},
   getNameSuccess: false,
   getNameError: false,
@@ -165,6 +169,35 @@ export default function nameReducer(state = defaultState, action = {}) {
       return {
         ...state,
         detailItem: payload,
+      };
+    case ADD_TO_FAVORITE:
+      if (state.favorites.includes(payload)) {
+        // remove part
+        return {
+          ...state,
+          favorites: state.favorites.filter(function (value, index, arr) {
+            return value !== payload;
+          }),
+        };
+      } else {
+        // add  part
+        return {
+          ...state,
+          favorites: [payload, ...state.favorites],
+        };
+      }
+      return {
+        ...state,
+        favorites:
+          state?.favorites?.indexOf(payload) > -1
+            ? state.favorites.filter(function (value, index, arr) {
+                return value !== payload;
+              })
+            : [payload, ...state.favorites],
+      };
+    case REMOVE_FROM_FAVORITE:
+      return {
+        ...state,
       };
     default:
       return state;

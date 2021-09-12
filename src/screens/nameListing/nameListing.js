@@ -21,16 +21,7 @@ import {
   GetOptimalWidth,
   scaledFontSize,
 } from "../../helpers/commonHelpers/helpers";
-
-const Item = ({ item, index, gotoDetails }) => (
-  <NameListCard
-    item={item}
-    index={index}
-    gotoDetails={() => {
-      gotoDetails();
-    }}
-  />
-);
+import favourites from "../favourites";
 export default class NameListing extends Component {
   constructor(props) {
     super(props);
@@ -108,18 +99,27 @@ export default class NameListing extends Component {
             keyExtractor={(item, index) => item + index}
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={this.ListEmptyComponent}
-            renderItem={({ item, index }) => (
-              <Item
-                item={item}
-                index={index}
-                gotoDetails={() => {
-                  this.props.setDetailItem(item);
-                  setTimeout(() => {
-                    this.props.navigation.navigate("NameDetails");
-                  }, 200);
-                }}
-              />
-            )}
+            renderItem={({ item, index }) => {
+              const fav = this.props?.namesData?.favorites?.filter(
+                (x) => x.id == item?.id
+              );
+              return (
+                <NameListCard
+                  fav={fav.length > 0 ? true : false}
+                  item={item}
+                  index={index}
+                  addToFav={() => {
+                    this.props.addToFav(item);
+                  }}
+                  gotoDetails={() => {
+                    this.props.setDetailItem(item);
+                    setTimeout(() => {
+                      this.props.navigation.navigate("NameDetails");
+                    }, 200);
+                  }}
+                />
+              );
+            }}
             renderSectionHeader={({ section: { title } }) => (
               <View style={styles.headerBox}>
                 <Text style={styles.header}>{title.toUpperCase()}</Text>

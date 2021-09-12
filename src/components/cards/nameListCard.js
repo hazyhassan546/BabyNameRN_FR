@@ -50,6 +50,7 @@ export default class NameListCard extends Component {
 
   render() {
     const { item, index } = this.props;
+    let fav = this.props.fav;
     return (
       <View
         style={[
@@ -61,12 +62,18 @@ export default class NameListCard extends Component {
       >
         <View style={styles.nameArea}>
           <Text style={styles.title}>{item.name}</Text>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              { backgroundColor: fav ? COLORS.PINKISH : COLORS.WHITE },
+            ]}
+            onPress={this.props.addToFav}
+          >
             <Icon
               name="hearto"
               type="antdesign"
               size={17}
-              color={COLORS.SIDE_MENU_TEXT}
+              color={fav ? COLORS.WHITE : COLORS.SIDE_MENU_TEXT}
             />
           </TouchableOpacity>
           <TouchableOpacity

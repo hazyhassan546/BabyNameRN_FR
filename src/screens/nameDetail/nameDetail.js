@@ -33,10 +33,18 @@ export default class NameDetails extends Component {
   }
 
   Item = ({ item, index }) => {
+    const fav = this.props?.namesData?.favorites?.filter(
+      (x) => x.id == item?.id
+    );
     return (
       <NameListCard
         item={item}
         index={index}
+        fav={fav.length > 0 ? true : false}
+        favorites={this.props.namesData.favorites}
+        addToFav={() => {
+          this.props.addToFav(item);
+        }}
         gotoDetails={() => {
           this.props.setLoading(true);
           this.props.setDetailItem(item);
@@ -54,7 +62,7 @@ export default class NameDetails extends Component {
 
   seeRelatedNames = () => {
     this.props.getRelatedNames({
-      keyword: this.props?.namesData?.detailItem?.name,
+      keyword: this.props?.namesData?.detailItem?.name?.substring(0, 4),
       religion: this.props?.namesData?.religion,
       gender: this.props?.namesData?.gender,
       alphabet: "",
@@ -62,10 +70,16 @@ export default class NameDetails extends Component {
   };
 
   renderHeader = () => {
+    const fav = this.props?.namesData?.favorites?.filter(
+      (x) => x.id == this.props?.namesData?.detailItem?.id
+    );
     return (
       <DetailsCard
-        data={this.props.namesData.detailItem}
+        data={this.props?.namesData?.detailItem}
+        fav={fav.length > 0 ? true : false}
         seeRelatedNames={this.seeRelatedNames}
+        favorites={this.props?.namesData?.favorites}
+        addToFav={() => this.props.addToFav(this.props?.namesData?.detailItem)}
       />
     );
   };

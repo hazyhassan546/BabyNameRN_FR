@@ -6,6 +6,7 @@ import {
   SectionList,
   StatusBar,
   ImageBackground,
+  FlatList,
 } from "react-native";
 import COLORS from "../../common/colors";
 import images from "../../common/images";
@@ -20,169 +21,6 @@ import {
   scaledFontSize,
 } from "../../helpers/commonHelpers/helpers";
 
-const DATA = [
-  {
-    title: "A",
-    data: [
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Ali",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-  {
-    title: "B",
-    data: [
-      {
-        name: "Bilal",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Bilal",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Bilal",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Bilal",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-  {
-    title: "C",
-    data: [
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Cat",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-  {
-    title: "D",
-    data: [
-      {
-        name: "Doe",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Doe",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-  {
-    title: "E",
-    data: [
-      {
-        name: "Elia",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-      {
-        name: "Elia",
-        meaning: "Meaning-Eminent, Noble, High In Rank",
-        religion: "Islam",
-        gender: "Male",
-        history: "xyz xyz xyz",
-      },
-    ],
-  },
-];
-
-const Item = ({ item, index, gotoDetails }) => (
-  <NameListCard
-    item={item}
-    index={index}
-    gotoDetails={() => {
-      gotoDetails();
-    }}
-  />
-);
 export default class Favorites extends Component {
   constructor(props) {
     super(props);
@@ -192,7 +30,7 @@ export default class Favorites extends Component {
   }
   componentDidMount() {
     this.setState({
-      title: "My Favorites"
+      title: "My Favorites",
     });
   }
 
@@ -215,39 +53,36 @@ export default class Favorites extends Component {
             this.props.navigation.navigate("Home");
           }}
         />
-        {/* <View
-          style={{
-            alignItems: "center",
-            marginBottom: GetOptimalHieght(30),
-          }}
-        >
-          <GenderOptions {...this.props} />
-          <View style={{ flexDirection: "row" }}>
-            <ValuePickerModal {...this.props}
-              onPress={() => {
-                this.props.navigation.navigate("ByReligion");
-              }}
-            />
-            <SearchBar  {...this.props}/>
-          </View>
-        </View> */}
-        <SectionList
-          sections={DATA}
+        <FlatList
+          data={this.props?.namesData?.favorites}
           keyExtractor={(item, index) => item + index}
-          renderItem={({ item, index }) => (
-            <Item
-              item={item}
-              index={index}
-              gotoDetails={() => {
-                this.props.navigation.navigate("NameDetails", { data: "Ali" });
+          ListEmptyComponent={
+            <View
+              style={{
+                height: GetOptimalHieght(500),
+                justifyContent: "center",
+                alignItems: "center",
               }}
-            />
-          )}
-          renderSectionHeader={({ section: { title } }) => (
-            <View style={styles.headerBox}>
-              <Text style={styles.header}>{title}</Text>
+            >
+              <Text>You don't have any favorite name.</Text>
             </View>
-          )}
+          }
+          renderItem={({ item, index }) => {
+            return (
+              <NameListCard
+                item={item}
+                index={index}
+                addToFav={() => this.props.addToFav(item)}
+                fav={true}
+                gotoDetails={() => {
+                  this.props.setDetailItem(item);
+                  setTimeout(() => {
+                    this.props.navigation.navigate("NameDetails");
+                  }, 200);
+                }}
+              />
+            );
+          }}
         />
       </ImageBackground>
     );

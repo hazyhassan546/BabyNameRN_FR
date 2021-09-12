@@ -23,10 +23,12 @@ import {
   scaledFontSize,
 } from "../../helpers/commonHelpers/helpers";
 
-const Item = ({ item, index, gotoDetails }) => (
+const Item = ({ item, index, gotoDetails, addToFav, favorites }) => (
   <NameListCard
     item={item}
     index={index}
+    favorites={favorites}
+    addToFav={addToFav}
     gotoDetails={() => {
       gotoDetails();
     }}
@@ -100,6 +102,10 @@ export default class Trending extends Component {
               <Item
                 item={item}
                 index={index}
+                favorites={this.props.namesData.favorites}
+                addToFav={() => {
+                  this.props.addToFav(item);
+                }}
                 gotoDetails={() => {
                   this.props.setDetailItem(item);
                   setTimeout(() => {

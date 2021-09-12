@@ -15,7 +15,7 @@ const API = async (options) => {
 
   return axios(options).catch((errorResponse) => {
     var errorMessages = "";
-    let errorCode = errorResponse.response.status;
+    //let errorCode = errorResponse.response.status;
     console.log(options.url + " < Real Error Message > ", errorResponse);
     if (!options.silent) {
       if (errorResponse.response && errorResponse.response.data.errors) {

@@ -19,6 +19,8 @@ import {
   GET_RELATED_NAMES_ERROR,
   CLEAR_RELATED_NAMES,
   SET_DETAIL_ITEM,
+  ADD_TO_FAVORITE,
+  REMOVE_FROM_FAVORITE,
 } from "../types/types";
 
 export const nameActionCreator = {
@@ -46,4 +48,7 @@ export const nameActionCreator = {
 
   /////
   setLoading: createAction(SET_LOADING),
+  /////
+  addToFav: createAction(ADD_TO_FAVORITE),
+  removeFromFav: createAction(REMOVE_FROM_FAVORITE),
 };

@@ -3,6 +3,7 @@ import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import Toast from "react-native-toast-message";
 
 /// Drawer screens
 import Home from "../../screens/home";
@@ -120,6 +121,7 @@ function Navigator() {
   return (
     <NavigationContainer>
       <DrawerMenu />
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </NavigationContainer>
   );
 }

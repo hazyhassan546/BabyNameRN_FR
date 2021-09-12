@@ -13,7 +13,6 @@ export const CLEAR_RELATED_NAMES = "CLEAR_RELATED_NAMES";
 
 export const SET_DETAIL_ITEM = "SET_DETAIL_ITEM";
 
-
 export const SET_GENDER = "SET_GENDER";
 export const CLEAR_GENDER = "CLEAR_GENDER";
 
@@ -26,3 +25,6 @@ export const CLEAR_KEYWORD = "CLEAR_KEYWORD";
 export const SET_ALPHABET = "SET_ALPHABET";
 
 export const SET_LOADING = "SET_LOADING";
+
+export const ADD_TO_FAVORITE = "ADD_TO_FAVORITE";
+export const REMOVE_FROM_FAVORITE = "REMOVE_FROM_FAVORITE";
